@@ -9,7 +9,7 @@ var coords = {
 function initialize() {
     
     var mapDiv = document.getElementById('map');
-    var latlng= new google.maps.LatLng(51.51,0);
+    var latlng= new google.maps.LatLng(51.40, 0.30);
     var mapOptions={
         center: latlng,
         zoom: 9,
@@ -18,7 +18,7 @@ function initialize() {
     map = new google.maps.Map(mapDiv,mapOptions);
     var marker = new google.maps.Marker(
         {
-            position: new google.maps.LatLng(51.51,0),
+            position: new google.maps.LatLng(51.40, 0.30),
             map: map,
             title: 'I am here!'
         });
