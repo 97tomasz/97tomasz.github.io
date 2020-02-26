@@ -18,11 +18,11 @@ function initialize() {
     map = new google.maps.Map(mapDiv,mapOptions);
     var marker = new google.maps.Marker(
         {
-            position: new google.maps.LatLng(51.51,0),
+            position: new google.maps.LatLng(51.4032, 0.3035),
             map: map,
             title: 'I am here!'
         });
-        var infoWindow=new google.maps.InfoWindow({content:'<div class="info"> This is my marker marker! </div>'});
+        var infoWindow=new google.maps.InfoWindow({content:'<div class="info"> I am here! </div>'});
         google.maps.event.addListener(marker, 'click', function(){infoWindow.open(map, marker)});
         //changeMarkerPosition(marker);  
 }
