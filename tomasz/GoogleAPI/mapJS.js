@@ -2,31 +2,38 @@
 google.maps.visualRefresh=true;
 var map;
 var coords = {
-        lat: 51.29,
-        lng: 0.06
+        lat: 51.490866,
+        lng: -0.104938
     };    
 function initialize() {
     var mapDiv = document.getElementById('map');
-    var latlng= new google.maps.LatLng(51.29,0.06);
-	var mapOptions={
+    var latlng= new google.maps.LatLng(coords);
+	var mapOptions=
+	{
         center: latlng,
-        zoom: 9,
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.HYBRID
     };
     map = new google.maps.Map(mapDiv,mapOptions);
-    var defaultMarker = new google.maps.Marker(
+    var defaultMarker = 
+		new google.maps.Marker(
         {
-            position: new google.maps.LatLng(51.29, 0.06),
-            map: map,
-            title: 'I am here!'
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-			mapTypeIds:['roadmap','terrain','hybrid']}
+			map: map,
+            position: new google.maps.LatLng(coords),
+            title: 'I am here!',
+			animation: google.maps.Animation.DROP
         });
         var infoWindow = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
-        google.maps.event.addListener(marker, 'click', function(){infoWindow.open(map, marker)});
-        //changeMarkerPosition(marker);  
+		google.maps.event.addListener(defaultMarker, 'click', function(){infoWindow.open(map, defaultMarker)});
+        //changeMarkerPosition(marker);
+	var defaultMarker2 = 
+		new google.maps.Marker(
+		{
+			position: new google.maps.LatLng(52.29, 0.06),
+			map:map,
+			title: 'I am not here!'
+			
+		});
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -39,7 +46,7 @@ function changeMarkerPosition(marker)
 }
 function interactiveMapChange()
 {
-	map.setOptions({center: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: ")), marker:});
+	new google.maps.Marker({position: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: ")), map:map, title:'New Marker',animation:google.maps.Animation.BOUNCE});
 	
 }
 function zoomTo()
@@ -77,4 +84,15 @@ function setTilt()
 function setCentre()
 {
     map.setOptions({center: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: "))});
+}
+function toggleBounce()
+{
+	if (defaultMarker.getAnimation()!==null)
+	{
+		defaultMarker.setAnimation==null;
+	}
+	else
+	{
+		marker.setAnimation(google.maps.Animation.BOUNCE)
+	}
 }
