@@ -4,13 +4,10 @@ var map;
 var coords = {
         lat: 51.29,
         lng: 0.06
-    };
-    
+    };    
 function initialize() {
-    
     var mapDiv = document.getElementById('map');
     var latlng= new google.maps.LatLng(51.29,0.06);
-    var 
 	var mapOptions={
         center: latlng,
         zoom: 9,
@@ -39,6 +36,11 @@ function changeMarkerPosition(marker)
  var latlng = new google.maps.LatLng(51.29, 0.06);
  marker.setPosition(latlng);
  marker.setOptions
+}
+function interactiveMapChange()
+{
+	map.setOptions({center: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: ")), marker:});
+	
 }
 function zoomTo()
 {
