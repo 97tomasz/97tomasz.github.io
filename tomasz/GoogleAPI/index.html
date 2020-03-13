@@ -18,7 +18,14 @@
         <script type="text/javascript" src="mapJS.js"></script>
     </head>
     <body>
-        <div id="navigationBar"> Test</div>
+        <div id="navigationBar">
+		<input type="button" id="button1" value="Button 1 - Changes location" onclick="interactiveMapChange()"/>
+		<input type="button" id="button2" value="Button 2 - Random Position" onclick="randomMapChange()"/>
+		<input type="button" id="button3" value="Button 3 - Add Marker" onclick="addMarker()"/>
+		<input type="button" id="button4" value="Button 4 - Add Area Markers" onclick="addAreaMarker()"/>
+		<input type="button" id="button5" value="Button 5 - Contour Points" onclick="addContour()"/>
+		<input type="button" id="button6" value="Button 6 - Routes" onclick="routeCalculation()"/>
+		</div>
         <button onclick="zoomTo()"> Zoom </button>
         <input type="button" id="setTypeSAT" value="Satellite" onclick="setTypeSAT()"/>
         <input type="button" id="setTypeROAD" value="Road" onclick="setTypeROAD()"/>
