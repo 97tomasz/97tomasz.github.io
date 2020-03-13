@@ -14,7 +14,7 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.HYBRID
     };
     map = new google.maps.Map(mapDiv,mapOptions);
-    var marker = new google.maps.Marker(
+    var defaultMarker = new google.maps.Marker(
         {
             position: new google.maps.LatLng(51.29, 0.06),
             map: map,
@@ -24,7 +24,7 @@ function initialize() {
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 			mapTypeIds:['roadmap','terrain','hybrid']}
         });
-        var infoWindow=new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
+        var infoWindow = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
         google.maps.event.addListener(marker, 'click', function(){infoWindow.open(map, marker)});
         //changeMarkerPosition(marker);  
 }
