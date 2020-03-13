@@ -25,11 +25,11 @@ function initialize() {
 			mapTypeControl: true,
 			mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-			mapTypeIds:['roadmap','terrain']}
+			mapTypeIds:['roadmap','terrain','satellite','hybrid']}
         });
         var infoWindow=new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
         google.maps.event.addListener(marker, 'click', function(){infoWindow.open(map, marker)});
-        changeMarkerPosition(marker);  
+        //changeMarkerPosition(marker);  
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
