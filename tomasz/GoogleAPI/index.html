@@ -13,19 +13,15 @@
             }
             .info {width: 6em; height:4em;}
 			.div {width:100%;height:4em;}
+			#button1,#button2{
+				display:inline-block;
+			}
         </style>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"></script>
         <script type="text/javascript" src="mapJS.js"></script>
     </head>
     <body>
-        <div id="navigationBar">
-		<input type="button" id="button1" value="B1 - Changes location ✔️" onclick="interactiveMapChange()"/>
-		<input type="button" id="button2" value="B2 - Random Position ✔" onclick="randomMapChange()"/>
-		<input type="button" id="button3" value="B3 - Add Marker" onclick="addMarker()"/>
-		<input type="button" id="button4" value="B4 - Add Area Markers" onclick="addAreaMarker()"/>
-		<input type="button" id="button5" value="B5 - Contour Points" onclick="addContour()"/>
-		<input type="button" id="button6" value="B6 - Routes" onclick="routeCalculation()"/>
-		</div>
+        
         <button onclick="zoomTo()"> Zoom </button>
         <input type="button" id="setTypeSAT" value="Satellite" onclick="setTypeSAT()"/>
         <input type="button" id="setTypeROAD" value="Road" onclick="setTypeROAD()"/>
@@ -33,8 +29,14 @@
         <input type="button" id="setTypeTERRAIN" value="Terrain" onclick="setTypeTERRAIN()"/>
         <input type="button" id="setTilt" value="Tilt" onclick="setTilt()"/>
         <button onclick="setCentre()">Set Centre </button>
-        <div id="output"></div>
         <div id="map" style="width:100%;height:30em"></div>
-        <div>Test2</div>
+        <div id="navigationBar">
+		<input type="button" id="button1" value="B1 - Changes location ✔️" onclick="interactiveMapChange()" style="width:50%"/>
+		<input type="button" id="button2" value="B2 - Random Position ✔️" onclick="randomMapChange()"style="width:50%"/>
+		<input type="button" id="button3" value="B3 - Add Antipode ✔️" onclick="addAntipode()"style="width:50%"/>
+		<input type="button" id="button4" value="B4 - Add Area Markers" onclick="addAreaMarker()"style="width:50%"/>
+		<input type="button" id="button5" value="B5 - Contour Points" onclick="addContour()"style="width:50%"/>
+		<input type="button" id="button6" value="B6 - Routes" onclick="routeCalculation()"style="width:50%"/>
+		</div>
     </body>
 </html>
