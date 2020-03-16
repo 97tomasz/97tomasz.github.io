@@ -28,7 +28,7 @@ function initialize() {
             title: 'I am here!',
 			animation: google.maps.Animation.BOUNCE
         });
-        var infoWindow = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
+        var infoWindow = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! Test Image below </div><img src="https://image.shutterstock.com/image-photo/colorful-flower-on-dark-tropical-260nw-721703848.jpg"/><img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=51.45,0&heading=151%pitch=0&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"/>'});
 		google.maps.event.addListener(defaultMarker, 'click', function(){infoWindow.open(map, defaultMarker)});
         //changeMarkerPosition(marker);
 	var defaultMarker2 = 
@@ -81,6 +81,10 @@ function addAntipode()
 }
 function addAreaMarker()
 {
+	var url1="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=";
+	var url2=url1;
+	var url3=url1;
+	var url4=url1;
 	if (areaMarker==false) 
 	{
 		areaMarker=true;
@@ -90,16 +94,26 @@ function addAreaMarker()
 		areaMarker=false;
 		marker1 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex+1.5,mapChangey+1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 1',label:'A',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
+		url1+=mapChangex+1.5+","+mapChangey+1.5;
+		url1+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker2 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex+1.5,mapChangey-1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 2',label:'B',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
+		url2+=mapChangex+1.5+","+mapChangey-1.5;
+		url2+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker3 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex-1.5,mapChangey-1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 3',label:'C',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
+		url3+=mapChangex-1.5+","+mapChangey-1.5;
+		url3+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker4 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex-1.5,mapChangey+1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 4',label:'D',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
-		var infoWindow1 = new google.maps.InfoWindow({content: "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=mapChangex,mapChangey&heading=151%pitch=0&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"});
-		var infoWindow2 = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
-		var infoWindow3 = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
-		var infoWindow4 = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! </div>'});
+		url4+=mapChangex-1.5+","+mapChangey+1.5;
+		url4+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
+		var infoWindow1 = new google.maps.InfoWindow({content:'<img src='+url1+'/>'});
+		var infoWindow2 = new google.maps.InfoWindow({content:'<img src='+url2+'/>'});
+		var infoWindow3 = new google.maps.InfoWindow({content:'<img src='+url3+'/>'});
+		var infoWindow4 = new google.maps.InfoWindow({content:'<img src='+url4+'/>'});
+		var markerImg2=document.getElementById('markerImg2');
+		//markerImg2.src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + mapChangex+","+mapChangey+ "&heading=151%pitch=0&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"
 		google.maps.event.addListener(marker1, 'click', function(){infoWindow1.open(map, marker1)});
 		google.maps.event.addListener(marker2, 'click', function(){infoWindow2.open(map, marker2)});
 		google.maps.event.addListener(marker3, 'click', function(){infoWindow3.open(map, marker3)});
