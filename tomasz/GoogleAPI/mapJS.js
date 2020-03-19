@@ -1,6 +1,6 @@
 
 google.maps.visualRefresh=true;
-var map;
+var map; 																			//global variables, such as whole map, starting co-ordinates, labels for buttons, lat and lng variables for Area Markers and antipode 
 var coords = {
         lat: 51.490866,
         lng: -0.104938
@@ -10,7 +10,12 @@ var labelIndex = 0;
 var mapChangex;
 var mapchangey;
 var areaMarker=false;
-function initialize() {
+var polygonCheck=false;
+var routey;
+var displays;
+var alternateRoute;
+function initialize() 
+{
     var mapDiv = document.getElementById('map');
     var latlng= new google.maps.LatLng(coords);
 	var mapOptions=
@@ -28,7 +33,8 @@ function initialize() {
             title: 'I am here!',
 			animation: google.maps.Animation.BOUNCE
         });
-        var infoWindow = new google.maps.InfoWindow({content:'<div class="info"> This is my marker! Test Image below </div><img src="https://image.shutterstock.com/image-photo/colorful-flower-on-dark-tropical-260nw-721703848.jpg"/><img src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=51.45,0&heading=151%pitch=0&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"/>'});
+        var infoWindow = new google.maps.InfoWindow({
+			content:'<div class="info">Default Marker</div><img src="https://image.shutterstock.com/image-photo/colorful-flower-on-dark-tropical-260nw-721703848.jpg"/>'});
 		google.maps.event.addListener(defaultMarker, 'click', function(){infoWindow.open(map, defaultMarker)});
         //changeMarkerPosition(marker);
 	var defaultMarker2 = 
@@ -37,13 +43,12 @@ function initialize() {
 			position: new google.maps.LatLng(52.29, 0.06),
 			map:map,
 			title: 'I am not here!'
-			
 		});
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-function changeMarkerPosition(marker) 
+function changeMarkerPosition(marker) //button 1
 {
  var latlng = new google.maps.LatLng(51.29, 0.06);
  marker.setPosition(latlng);
@@ -61,12 +66,12 @@ function interactiveMapChange()
 	mapChangex=parseInt(mapChangex);
 	mapChangey=parseInt(mapChangey);
 	newMarker = new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey), map:map,animation:google.maps.Animation.DROP,title:'New Marker ' + labels.charAt(labelIndex),label:labels.charAt(labelIndex),icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}});
+		url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}});
 	labelIndex++;
 	map.setOptions({center: new google.maps.LatLng(mapChangex,mapChangey)});
 	return newMarker;
 }
-function addAntipode()
+function addAntipode() //button 3
 {
 	mapChangex=prompt("Latitude: ");
 	mapChangey=prompt("Longitude: ");
@@ -75,11 +80,10 @@ function addAntipode()
 	mapChangex=mapChangex-mapChangex-mapChangex;
 	mapChangey=mapChangex-180;
 	newMarker = new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey), map:map,animation:google.maps.Animation.DROP,title:'New Antipode',label:'antipode',icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
+		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 	map.setOptions({center: new google.maps.LatLng(mapChangex,mapChangey)});
-
 }
-function addAreaMarker()
+function addAreaMarker() //button 4
 {
 	var url1="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=";
 	var url2=url1;
@@ -119,26 +123,25 @@ function addAreaMarker()
 		google.maps.event.addListener(marker3, 'click', function(){infoWindow3.open(map, marker3)});
 		google.maps.event.addListener(marker4, 'click', function(){infoWindow4.open(map, marker4)});
 		google.maps.event.addDomListener(window, 'load', initialize);
-	min = Math.ceil(0);
-    max = Math.floor(1);
-    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-	mapChangex = mapChangex - (Math.random()-1);
-	}else{
-	mapChangex = mapChangex + (Math.random()-1);
-	}
-	min = Math.ceil(0);
-    max = Math.floor(1);
-    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-	mapChangey = mapChangey - (Math.random());
-	}else{
-	mapChangey = mapChangey + (Math.random());
-	}
+		min = Math.ceil(0);
+		max = Math.floor(1);
+		if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
+			mapChangex = mapChangex - (Math.random()-1);
+		}else{
+			mapChangex = mapChangex + (Math.random()-1);
+		}
+		min = Math.ceil(0);
+		max = Math.floor(1);
+		if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
+			mapChangey = mapChangey - (Math.random());
+		}else{
+			mapChangey = mapChangey + (Math.random());
+		}
 		marker5 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex-0.5,mapChangey+0.5), map:map,animation:google.maps.Animation.DROP,title:'Random Marker',label:'X',size:30,icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
 	}
-	
 }
-function randomMapChange()
+function randomMapChange() //button 2
 {
     min = Math.ceil(0);
     max = Math.floor(1);
@@ -154,7 +157,6 @@ function randomMapChange()
 	}else{
 	mapChangey = mapChangey + (Math.random()*2);
 	}
-
 	new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey),map:map,animation:google.maps.Animation.DROP,title:'Random Generation',icon: {
       url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
 }
@@ -187,8 +189,7 @@ function setTilt()
     if (map.getTilt()==0)
     {
         map.setTilt(45);   
-    }
-    
+    }   
 }
 function setCentre()
 {
@@ -205,3 +206,142 @@ function toggleBounce()
 		marker.setAnimation(google.maps.Animation.BOUNCE)
 	}
 }
+function addContour() //button 5
+{
+	var polygon = new google.maps.Polygon({
+		path: new google.maps.MVCArray(), 												//uses path as added to the array. 
+		map: map,
+		clickable: false,
+		fillColor: "blue"
+	});	
+	if (!polygonCheck){																	//if false Polygon is added
+		polygonCheck = true; 															//boolean to alternate between on and off. 
+		polygon.setMap(map);
+		listener = google.maps.event.addListener(map,'click',function(i) {
+			var path = polygon.getPath();
+			path.push(i.latLng);
+			var marker = new google.maps.Marker({
+				position: i.latLng, 													//user click location. 
+				map: map
+			});
+		});
+		polygon.setOptions({clickable: true}); 											//enables markers to be placed in polygon. 
+		hover = google.maps.event.addListener(polygon, "mouseover", function(event){	//creates a mouseover event and function. 
+			polygon.setOptions({fillColor: 'yellow'});
+			polygon.setMap(map);
+			var marker = new google.maps.Marker({
+				position: event.latLng, 												//sets marker to mouse location. 
+				map: map,
+				icon: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+			});
+		});
+		noHover = google.maps.event.addListener(polygon, "mouseout", function(event){	//when mouse leaves, the colour returns to original. 
+			polygon.setOptions({fillColor: 'blue'});
+			polygon.setMap(map);
+		});	
+	}
+	else
+	{
+		google.maps.event.removeListener(hover,noHover);								//all listeners removed when button is switched off. 
+		polygon.setOptions({clickable: false});
+		polygonCheck = false; 															//boolean to alternate between on and off
+		google.maps.event.removeListener(listener);
+	}
+}
+function routeCalculation() //button 6
+{
+	var startLat = prompt("Enter start latitude");//get route coords. 
+	var startLon = prompt("Enter start longitude");
+	
+	var destinationLat = prompt("Enter destination latitude");
+	var destinationLongitude = prompt("Enter destination longitude");
+	
+	var start = {lat: parseFloat(startLat), lng: parseFloat(startLon)};
+	var destination = {lat: parseFloat(destinationLat), lng: parseFloat(destinationLongitude)};
+	
+	if(displays)
+		displays.setMap(null);
+	displays = new google.maps.DirectionsRenderer({
+		suppressMarkers: true //turn markers off.
+	});
+	
+	startMarker = new google.maps.Marker({
+		position: new google.maps.LatLng(start), //latlng made with user input.
+		map: map,
+		icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+	});
+	
+	destinationMarker = new google.maps.Marker({
+		position: new google.maps.LatLng(destination),
+		map: map,
+		icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+	});
+	
+	var streetView = new google.maps.StreetViewService();
+	
+	startMarker.addListener('click', function() { 
+		info.open(map, startMarker);
+		streetView.getPanorama({location: start, radius: 1000}, streetDetails); //street view info 
+	});
+	
+	destinationMarker.addListener('click', function() {
+		info.open(map,destinationMarker);
+		streetView.getPanorama({location: destination, radius: 1000}, streetDetails);
+	});
+	
+	routey = new google.maps.DirectionsService();
+	displays.setMap(map);
+	
+	var routeRequest = {
+		origin: start,
+		destination: destination,
+		travelMode: 'DRIVING',
+		provideRouteAlternatives: true
+	};
+	
+	routey.route(routeRequest,function (reply, status){//request made with direction service object. 
+		if (status == google.maps.DirectionsStatus.OK){//if streetview details are available then continues. 
+			displays.setDirections(reply);//displays main route.
+			addSteps(reply, saveMarker, info, map);//call addSteps.
+			if(!alternateRoute) //routes added to array. 
+				alternateRoute = new Array(reply.routes.length);
+			else
+				for (var i = 0; i < reply.routes.length; i++)
+					alternateRoute[i].setMap(null);
+		}
+		for (var i = 0; i < reply.routes.length; i++) {
+			alternateRoute[i] = new google.maps.DirectionsRenderer({//renders each available route. 
+				polylineOptions: {strokeColor: randomColour[labelIndex++ % randomColour.length]}, //each route has diff colour. 
+	
+			});
+			alternateRoute[i].setDirections(reply);//set directions for all the routes. 
+			alternateRoute[i].setRouteIndex(i);
+			alternateRoute[i].setMap(map);
+		}
+	});
+		
+}
+var saveMarker = [];
+function addSteps(alternateRoute, saveMarker, info, map){//adds markers at each step. 
+	var alternate = alternateRoute.routes[0].legs[0];
+	for (var i = 0; i < alternate.steps.length; i++) {
+		var marker = saveMarker[i] || new google.maps.Marker({ //or operator, keeps old marker OR adds new one. 
+		icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" + randomColour[rand] +".png" 
+		});
+		marker.setMap(map);
+		marker.setPosition(alternate.steps[i].start_location); //markers added to start.
+		addStreetView(info, marker, alternate.steps[i].instructions, map);
+	}
+}
+var info = new google.maps.InfoWindow({
+	content: '<div id="content" style="width:200px;height:200px;"></div>'
+	});
+
+function addStreetView(info, marker, map){//street view added to markers. 
+	google.maps.event.addListener(marker, 'click', function(){
+		info.open(map, marker);
+		streetView = new google.maps.StreetViewService();
+		streetView.getPanorama({location: marker.getPosition(), radius: 1000}, streetDetails);//location of marker provides street view info. 
+	});
+}
+
