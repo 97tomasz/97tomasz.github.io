@@ -250,7 +250,7 @@ function addContour() //button 5
 }
 function routeCalculation() //button 6
 {
-	var startLat = prompt("Enter start latitude");//get route coords. 
+	var startLat = prompt("Enter start latitude");//get coordinates
 	var startLon = prompt("Enter start longitude");
 	
 	var destinationLat = prompt("Enter destination latitude");
@@ -262,11 +262,11 @@ function routeCalculation() //button 6
 	if(displays)
 		displays.setMap(null);
 	displays = new google.maps.DirectionsRenderer({
-		suppressMarkers: true //turn markers off.
+		suppressMarkers: true 
 	});
 	
 	startMarker = new google.maps.Marker({
-		position: new google.maps.LatLng(start), //latlng made with user input.
+		position: new google.maps.LatLng(start),
 		map: map,
 		icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
 	});
@@ -281,8 +281,7 @@ function routeCalculation() //button 6
 	
 	startMarker.addListener('click', function() { 
 		info.open(map, startMarker);
-		streetView.getPanorama({location: start, radius: 1000}, streetDetails); //street view info 
-	});
+		streetView.getPanorama({location: start, radius: 1000}, streetDetails); 
 	
 	destinationMarker.addListener('click', function() {
 		info.open(map,destinationMarker);
@@ -299,22 +298,22 @@ function routeCalculation() //button 6
 		provideRouteAlternatives: true
 	};
 	
-	routey.route(routeRequest,function (reply, status){//request made with direction service object. 
-		if (status == google.maps.DirectionsStatus.OK){//if streetview details are available then continues. 
-			displays.setDirections(reply);//displays main route.
-			addSteps(reply, saveMarker, info, map);//call addSteps.
-			if(!alternateRoute) //routes added to array. 
+	routey.route(routeRequest,function (reply, status){ 
+		if (status == google.maps.DirectionsStatus.OK){
+			displays.setDirections(reply);
+			addSteps(reply, saveMarker, info, map);
+			if(!alternateRoute) 
 				alternateRoute = new Array(reply.routes.length);
 			else
 				for (var i = 0; i < reply.routes.length; i++)
 					alternateRoute[i].setMap(null);
 		}
 		for (var i = 0; i < reply.routes.length; i++) {
-			alternateRoute[i] = new google.maps.DirectionsRenderer({//renders each available route. 
-				polylineOptions: {strokeColor: randomColour[labelIndex++ % randomColour.length]}, //each route has diff colour. 
+			alternateRoute[i] = new google.maps.DirectionsRenderer({ 
+				polylineOptions: {strokeColor: randomColour[labelIndex++ % randomColour.length]},  
 	
 			});
-			alternateRoute[i].setDirections(reply);//set directions for all the routes. 
+			alternateRoute[i].setDirections(reply); 
 			alternateRoute[i].setRouteIndex(i);
 			alternateRoute[i].setMap(map);
 		}
