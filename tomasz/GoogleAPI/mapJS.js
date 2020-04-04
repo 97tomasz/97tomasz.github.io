@@ -99,19 +99,19 @@ function addAreaMarker() //button 4
 		marker1 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex+1.5,mapChangey+1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 1',label:'A',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 		url1+=mapChangex+1.5+","+mapChangey+1.5;
-		url1+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
+		url1+="&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker2 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex+1.5,mapChangey-1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 2',label:'B',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 		url2+=mapChangex+1.5+","+mapChangey-1.5;
-		url2+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
+		url2+="&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker3 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex-1.5,mapChangey-1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 3',label:'C',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 		url3+=mapChangex-1.5+","+mapChangey-1.5;
-		url3+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
+		url3+="&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		marker4 = new google.maps.Marker({position: new google.maps.LatLng(mapChangex-1.5,mapChangey+1.5), map:map,animation:google.maps.Animation.DROP,title:'Corner 4',label:'D',icon: {
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 		url4+=mapChangex-1.5+","+mapChangey+1.5;
-		url4+="&pitch=0&radius=30000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
+		url4+="&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp";
 		var infoWindow1 = new google.maps.InfoWindow({content:'<img src='+url1+'/>'});
 		var infoWindow2 = new google.maps.InfoWindow({content:'<img src='+url2+'/>'});
 		var infoWindow3 = new google.maps.InfoWindow({content:'<img src='+url3+'/>'});
@@ -250,14 +250,14 @@ function addContour() //button 5
 }
 function routeCalculation() //button 6
 {
-	var startLat = prompt("Enter start latitude");//get coordinates
-	var startLon = prompt("Enter start longitude");
+	var LatStart = prompt("Enter start latitude");//get coordinates
+	var LonStart = prompt("Enter start longitude");
 	
-	var destinationLat = prompt("Enter destination latitude");
-	var destinationLongitude = prompt("Enter destination longitude");
+	var LatDest = prompt("Enter destination latitude");
+	var LongDest = prompt("Enter destination longitude");
 	
-	var start = {lat: parseFloat(startLat), lng: parseFloat(startLon)};
-	var destination = {lat: parseFloat(destinationLat), lng: parseFloat(destinationLongitude)};
+	var Start = {lat: parseFloat(LatStart), lng: parseFloat(LonStart)};
+	var Dest = {lat: parseFloat(LatDest), lng: parseFloat(LongDest)};
 	
 	if(displays)
 		displays.setMap(null);
@@ -265,43 +265,44 @@ function routeCalculation() //button 6
 		suppressMarkers: true 
 	});
 	
-	startMarker = new google.maps.Marker({
-		position: new google.maps.LatLng(start),
+	MarkerStart = new google.maps.Marker({
+		position: new google.maps.LatLng(Start),
 		map: map,
-		icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+		icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
 	});
 	
-	destinationMarker = new google.maps.Marker({
-		position: new google.maps.LatLng(destination),
+	MarkerDest = new google.maps.Marker({
+		position: new google.maps.LatLng(Dest),
 		map: map,
 		icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 	});
 	
 	var streetView = new google.maps.StreetViewService();
 	
-	startMarker.addListener('click', function() { 
-		info.open(map, startMarker);
-		streetView.getPanorama({location: start, radius: 1000}, streetDetails); 
+	MarkerStart.addListener('click', function() { 
+		info.open(map, MarkerStart);
+		streetView.getPanorama({location: Start, radius: 1000});
+	});		
 	
-	destinationMarker.addListener('click', function() {
-		info.open(map,destinationMarker);
-		streetView.getPanorama({location: destination, radius: 1000}, streetDetails);
+	MarkerDest.addListener('click', function() {
+		info.open(map,MarkerDest);
+		streetView.getPanorama({location: Dest, radius: 1000});
 	});
 	
-	routey = new google.maps.DirectionsService();
+	r = new google.maps.DirectionsService();
 	displays.setMap(map);
 	
 	var routeRequest = {
-		origin: start,
-		destination: destination,
+		origin: Start,
+		destination: Dest,
 		travelMode: 'DRIVING',
 		provideRouteAlternatives: true
 	};
 	
-	routey.route(routeRequest,function (reply, status){ 
+	r.route(routeRequest,function (reply, status){ 
 		if (status == google.maps.DirectionsStatus.OK){
 			displays.setDirections(reply);
-			addSteps(reply, saveMarker, info, map);
+			addSteps(reply, MarkerSave, info, map);
 			if(!alternateRoute) 
 				alternateRoute = new Array(reply.routes.length);
 			else
@@ -310,7 +311,7 @@ function routeCalculation() //button 6
 		}
 		for (var i = 0; i < reply.routes.length; i++) {
 			alternateRoute[i] = new google.maps.DirectionsRenderer({ 
-				polylineOptions: {strokeColor: randomColour[labelIndex++ % randomColour.length]},  
+				polylineOptions: {strokeColor: '#2249a3'},  
 	
 			});
 			alternateRoute[i].setDirections(reply); 
@@ -320,12 +321,12 @@ function routeCalculation() //button 6
 	});
 		
 }
-var saveMarker = [];
-function addSteps(alternateRoute, saveMarker, info, map){//adds markers at each step. 
+var MarkerSave = [];
+function addSteps(alternateRoute, MarkerSave, info, map){ 
 	var alternate = alternateRoute.routes[0].legs[0];
 	for (var i = 0; i < alternate.steps.length; i++) {
-		var marker = saveMarker[i] || new google.maps.Marker({ //or operator, keeps old marker OR adds new one. 
-		icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_" + randomColour[rand] +".png" 
+		var marker = MarkerSave[i] || new google.maps.Marker({ 
+		icon: "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green.png" 
 		});
 		marker.setMap(map);
 		marker.setPosition(alternate.steps[i].start_location); //markers added to start.
@@ -340,7 +341,7 @@ function addStreetView(info, marker, map){//street view added to markers.
 	google.maps.event.addListener(marker, 'click', function(){
 		info.open(map, marker);
 		streetView = new google.maps.StreetViewService();
-		streetView.getPanorama({location: marker.getPosition(), radius: 1000}, streetDetails);//location of marker provides street view info. 
+		streetView.getPanorama({location: marker.getPosition(), radius: 1000},"https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+location+"&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp");//location of marker provides street view info. 
 	});
 }
 
