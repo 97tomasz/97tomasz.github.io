@@ -1,6 +1,6 @@
 
 google.maps.visualRefresh=true;
-var map; 																			//global variables, such as whole map, starting co-ordinates, labels for buttons, lat and lng variables for Area Markers and antipode 
+var map; 																//global variables, such as whole map, starting co-ordinates, labels for buttons, lat and lng variables for Area Markers and antipode 
 var coords = {
         lat: 51.490866,
         lng: -0.104938
@@ -14,7 +14,7 @@ var polygonCheck=false;
 var routey;
 var displays;
 var alternateRoute;
-function initialize() 																//initializing the map, map options & marker
+function initialize() 													//initializing the map, map options & marker
 {
     var mapDiv = document.getElementById('map');
     var latlng= new google.maps.LatLng(coords);
@@ -48,13 +48,13 @@ function initialize() 																//initializing the map, map options & mark
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
-function changeMarkerPosition(marker) //button 1
+function changeMarkerPosition(marker) 									//button 1
 {
  var latlng = new google.maps.LatLng(51.29, 0.06);
  marker.setPosition(latlng);
  marker.setOptions
 }
-function LatOOB(coords) //latitude out of bounds
+function LatOOB(coords) 												//latitude out of bounds
 {
 	coords=coords-180;
 	return coords;
@@ -71,7 +71,7 @@ function interactiveMapChange()
 	map.setOptions({center: new google.maps.LatLng(mapChangex,mapChangey)});
 	return newMarker;
 }
-function randomMapChange() //button 2
+function randomMapChange() 												//button 2
 {
     min = Math.ceil(0);
     max = Math.floor(1);
@@ -90,7 +90,7 @@ function randomMapChange() //button 2
 	new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey),map:map,animation:google.maps.Animation.DROP,title:'Random Generation',icon: {
       url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
 }
-function addAntipode() //button 3
+function addAntipode() 													//button 3
 {
 	mapChangex=prompt("Latitude: ");
 	mapChangey=prompt("Longitude: ");
@@ -102,7 +102,7 @@ function addAntipode() //button 3
 		url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"}});
 	map.setOptions({center: new google.maps.LatLng(mapChangex,mapChangey)});
 }
-function addAreaMarker() //button 4
+function addAreaMarker() 												//button 4
 {
 	var url1="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=";
 	var url2=url1;
@@ -136,7 +136,6 @@ function addAreaMarker() //button 4
 		var infoWindow3 = new google.maps.InfoWindow({content:'<img src='+url3+'/>'});
 		var infoWindow4 = new google.maps.InfoWindow({content:'<img src='+url4+'/>'});
 		var markerImg2=document.getElementById('markerImg2');
-		//markerImg2.src="https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + mapChangex+","+mapChangey+ "&heading=151%pitch=0&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp"
 		google.maps.event.addListener(marker1, 'click', function(){infoWindow1.open(map, marker1)});
 		google.maps.event.addListener(marker2, 'click', function(){infoWindow2.open(map, marker2)});
 		google.maps.event.addListener(marker3, 'click', function(){infoWindow3.open(map, marker3)});
@@ -163,48 +162,48 @@ function addAreaMarker() //button 4
 function addContour() //button 5
 {
 	var polygon = new google.maps.Polygon({
-		path: new google.maps.MVCArray(), 												//uses path as added to the array. 
+		path: new google.maps.MVCArray(), 												//path of polygon is the array contained in MVCArray
 		map: map,
 		clickable: false,
 		fillColor: "blue"
 	});	
-	if (!polygonCheck){																	//if false Polygon is added
-		polygonCheck = true; 															//boolean to alternate between on and off. 
+	if (!polygonCheck){																	//if Polygon isn't enabled
+		polygonCheck = true; 															//boolean to indicate status of Polygon 
 		polygon.setMap(map);
 		listener = google.maps.event.addListener(map,'click',function(i) {
 			var path = polygon.getPath();
 			path.push(i.latLng);
 			var marker = new google.maps.Marker({
-				position: i.latLng, 													//user click location. 
+				position: i.latLng, 													//Location of Click. 
 				map: map
 			});
 		});
-		polygon.setOptions({clickable: true}); 											//enables markers to be placed in polygon. 
-		hover = google.maps.event.addListener(polygon, "mouseover", function(event){	//creates a mouseover event and function. 
+		polygon.setOptions({clickable: true}); 											//Enables placing markers in Polygon. 
+		hover = google.maps.event.addListener(polygon, "mouseover", function(event){	//Mouseover Event - polygon fill changes colour
 			polygon.setOptions({fillColor: 'yellow'});
 			polygon.setMap(map);
 			var marker = new google.maps.Marker({
-				position: event.latLng, 												//sets marker to mouse location. 
+				position: event.latLng, 												//Marker placed at mouse location. 
 				map: map,
 				icon: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
 			});
 		});
-		noHover = google.maps.event.addListener(polygon, "mouseout", function(event){	//when mouse leaves, the colour returns to original. 
+		noHover = google.maps.event.addListener(polygon, "mouseout", function(event){	//Mouseout event - polygon fill reverts to original colour. 
 			polygon.setOptions({fillColor: 'blue'});
 			polygon.setMap(map);
 		});	
 	}
 	else
 	{
-		google.maps.event.removeListener(hover,noHover);								//all listeners removed when button is switched off. 
+		google.maps.event.removeListener(hover,noHover);								//Listeners removed when Polygon is switched off. 
 		polygon.setOptions({clickable: false});
-		polygonCheck = false; 															//boolean to alternate between on and off
+		polygonCheck = false; 															
 		google.maps.event.removeListener(listener);
 	}
 }
-function routeCalculation() //button 6
+function routeCalculation() 															//button 6
 {
-	var LatStart = prompt("Enter start latitude");//get coordinates
+	var LatStart = prompt("Enter start latitude");										//Coordinates
 	var LonStart = prompt("Enter start longitude");
 	
 	var LatDest = prompt("Enter destination latitude");
@@ -215,7 +214,7 @@ function routeCalculation() //button 6
 	
 	if(displays)
 		displays.setMap(null);
-	displays = new google.maps.DirectionsRenderer({
+	displays = new google.maps.DirectionsRenderer({										//DirectionsRenderer declaration
 		suppressMarkers: true 
 	});
 	
@@ -231,7 +230,7 @@ function routeCalculation() //button 6
 		icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
 	});
 	
-	var streetView = new google.maps.StreetViewService();
+	var streetView = new google.maps.StreetViewService();								//StreetViewService declaration
 	
 	MarkerStart.addListener('click', function() { 
 		info.open(map, MarkerStart);
