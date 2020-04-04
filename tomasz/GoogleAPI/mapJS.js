@@ -14,7 +14,7 @@ var polygonCheck=false;
 var routey;
 var displays;
 var alternateRoute;
-function initialize() 
+function initialize() 																//initializing the map, map options & marker
 {
     var mapDiv = document.getElementById('map');
     var latlng= new google.maps.LatLng(coords);
@@ -54,7 +54,7 @@ function changeMarkerPosition(marker) //button 1
  marker.setPosition(latlng);
  marker.setOptions
 }
-function LatOOB(coords)
+function LatOOB(coords) //latitude out of bounds
 {
 	coords=coords-180;
 	return coords;
@@ -70,6 +70,25 @@ function interactiveMapChange()
 	labelIndex++;
 	map.setOptions({center: new google.maps.LatLng(mapChangex,mapChangey)});
 	return newMarker;
+}
+function randomMapChange() //button 2
+{
+    min = Math.ceil(0);
+    max = Math.floor(1);
+    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
+	mapChangex = mapChangex - (Math.random()*2);
+	}else{
+	mapChangex = mapChangex + (Math.random()*2);
+	}
+	min = Math.ceil(0);
+    max = Math.floor(1);
+    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
+	mapChangey = mapChangey - (Math.random()*2);
+	}else{
+	mapChangey = mapChangey + (Math.random()*2);
+	}
+	new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey),map:map,animation:google.maps.Animation.DROP,title:'Random Generation',icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
 }
 function addAntipode() //button 3
 {
@@ -141,71 +160,6 @@ function addAreaMarker() //button 4
 		url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
 	}
 }
-function randomMapChange() //button 2
-{
-    min = Math.ceil(0);
-    max = Math.floor(1);
-    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-	mapChangex = mapChangex - (Math.random()*2);
-	}else{
-	mapChangex = mapChangex + (Math.random()*2);
-	}
-	min = Math.ceil(0);
-    max = Math.floor(1);
-    if (Math.floor(Math.random() * (max - min + 1)) + min == 1) {
-	mapChangey = mapChangey - (Math.random()*2);
-	}else{
-	mapChangey = mapChangey + (Math.random()*2);
-	}
-	new google.maps.Marker({position: new google.maps.LatLng(mapChangex,mapChangey),map:map,animation:google.maps.Animation.DROP,title:'Random Generation',icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}});
-}
-function zoomTo()
-{
-    map.setOptions({zoom: parseInt(prompt('zoom value'))});
-}
-function setTypeSAT()
-{
-    map.setOptions({mapTypeId: google.maps.MapTypeId.SATELLITE});
-}
-function setTypeROAD()
-{
-    map.setOptions({mapTypeId: google.maps.MapTypeId.ROADMAP});
-}
-function setTypeTERRAIN()
-{
-    map.setOptions({mapTypeId: google.maps.MapTypeId.TERRAIN});
-}
-function setTypeHYB()
-{
-    map.setOptions({mapTypeId: google.maps.MapTypeId.HYBRID});
-}
-function setTilt()
-{
-    if (map.getTilt()==45)
-    {
-       map.setTilt(0);
-    }
-    if (map.getTilt()==0)
-    {
-        map.setTilt(45);   
-    }   
-}
-function setCentre()
-{
-    map.setOptions({center: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: "))});
-}
-function toggleBounce()
-{
-	if (defaultMarker.getAnimation()!==null)
-	{
-		defaultMarker.setAnimation==null;
-	}
-	else
-	{
-		marker.setAnimation(google.maps.Animation.BOUNCE)
-	}
-}
 function addContour() //button 5
 {
 	var polygon = new google.maps.Polygon({
@@ -254,10 +208,10 @@ function routeCalculation() //button 6
 	var LonStart = prompt("Enter start longitude");
 	
 	var LatDest = prompt("Enter destination latitude");
-	var LongDest = prompt("Enter destination longitude");
+	var LonDest = prompt("Enter destination longitude");
 	
 	var Start = {lat: parseFloat(LatStart), lng: parseFloat(LonStart)};
-	var Dest = {lat: parseFloat(LatDest), lng: parseFloat(LongDest)};
+	var Dest = {lat: parseFloat(LatDest), lng: parseFloat(LonDest)};
 	
 	if(displays)
 		displays.setMap(null);
@@ -321,8 +275,8 @@ function routeCalculation() //button 6
 	});
 		
 }
-var MarkerSave = [];
-function addSteps(alternateRoute, MarkerSave, info, map){ 
+var MarkerSave = []; //part of button 6
+function addSteps(alternateRoute, MarkerSave, info, map){ //part of button 6
 	var alternate = alternateRoute.routes[0].legs[0];
 	for (var i = 0; i < alternate.steps.length; i++) {
 		var marker = MarkerSave[i] || new google.maps.Marker({ 
@@ -337,11 +291,57 @@ var info = new google.maps.InfoWindow({
 	content: '<div id="content" style="width:200px;height:200px;"></div>'
 	});
 
-function addStreetView(info, marker, map){//street view added to markers. 
+function addStreetView(info, marker, map){
 	google.maps.event.addListener(marker, 'click', function(){
 		info.open(map, marker);
 		streetView = new google.maps.StreetViewService();
 		streetView.getPanorama({location: marker.getPosition(), radius: 1000},"https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+location+"&pitch=0&radius=100000&key=AIzaSyCpR2-InfUhJU0jAOKPMotRV_-5_zEDPDc&y=3.exp");//location of marker provides street view info. 
 	});
+}
+function zoomTo()
+{
+    map.setOptions({zoom: parseInt(prompt('zoom value'))});
+}
+function setTypeSAT()
+{
+    map.setOptions({mapTypeId: google.maps.MapTypeId.SATELLITE});
+}
+function setTypeROAD()
+{
+    map.setOptions({mapTypeId: google.maps.MapTypeId.ROADMAP});
+}
+function setTypeTERRAIN()
+{
+    map.setOptions({mapTypeId: google.maps.MapTypeId.TERRAIN});
+}
+function setTypeHYB()
+{
+    map.setOptions({mapTypeId: google.maps.MapTypeId.HYBRID});
+}
+function setTilt()
+{
+    if (map.getTilt()==45)
+    {
+       map.setTilt(0);
+    }
+    if (map.getTilt()==0)
+    {
+        map.setTilt(45);   
+    }   
+}
+function setCentre()
+{
+    map.setOptions({center: new google.maps.LatLng(prompt("Latitude: "),prompt("Longitude: "))});
+}
+function toggleBounce()
+{
+	if (defaultMarker.getAnimation()!==null)
+	{
+		defaultMarker.setAnimation==null;
+	}
+	else
+	{
+		marker.setAnimation(google.maps.Animation.BOUNCE)
+	}
 }
 
